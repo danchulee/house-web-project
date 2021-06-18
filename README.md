@@ -1,2 +1,15 @@
 # house-web-project
-부동산 검색 웹사이트
+> Note : 2020.02 ~ 2020.05
+
+
+
+**개발 환경**
+
+- Spring Boot
+- Vue.js
+- MySQL
+
+
+
+
+
