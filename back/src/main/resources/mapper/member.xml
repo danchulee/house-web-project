@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.MemberMapper">
+
+	<select id="login" parameterType="map" resultType="memberDto">
+		select *
+		from hh_member
+		where userid = #{userid} and userpwd = #{userpwd}
+	</select>
+	
+	<select id="memberList" resultType="memberDto">
+		select userid, userpwd, username, email, date_format(joindate, '%y.%m.%d') joindate
+		from hh_member
+		order by joindate desc;
+	</select>
+	
+	<select id="getLike" resultType="HouseDeal">
+		select * 
+		from housedeal join likehouse
+		where likehouse.userid = #{userid}
+		and likehouse.dealNum = housedeal.no;
+	</select>
+	
+	<select id="memberInfo" parameterType="String" resultType="memberdto">
+		select userid, userpwd, username, email, date_format(joindate, '%y.%m.%d') joindate
+		from hh_member
+		where userid = #{userid}
+	</select>
+	
+	<insert id="memberRegister" parameterType="MemberDto">
+		insert into hh_member (userid, userpwd, username, email, joindate)
+		values (#{userid}, #{userpwd}, #{username}, #{email}, now())
+	</insert>
+	
+	<insert id="memberLike" parameterType="map">
+		insert into likehouse (userid, dealNum)
+		values (#{userid}, #{dealno})
+	</insert>
+	
+	<update id="memberModify" parameterType="MemberDto">
+		update hh_member
+		set userpwd = #{userpwd}, email = #{email}, username = #{username}
+		where userid = #{userid}
+	</update>
+	
+	<delete id="memberDelete" parameterType="String">
+		delete from hh_member
+		where userid = #{userid}
+	</delete>
+	
+	
+	<select id="memberFind" parameterType="map" resultType="String">
+        select userpwd
+        from hh_member
+        where userid = #{userid} and username = #{username} and email = #{email}
+    </select>
+    
+</mapper>

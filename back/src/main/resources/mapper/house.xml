@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.happyhouse.model.mapper.HouseMapper">
+
+	<select id="searchAll" resultType="HouseDeal">
+		select * from housedeal
+	</select>
+	
+	<select id="search" parameterType="int" resultType="HouseDeal">
+		select * from housedeal
+		where no = #{no}
+	</select>
+	
+	<select id="searchDongInfo" parameterType="map" resultType="AreaInfo">
+        select dongcode, lat, lng
+        from baseaddress 
+        where gugun = #{gugun} and dong = #{dong}
+    </select>
+	
+	<select id="searchDong"  parameterType="map" resultType="HouseDeal">
+		select no, AptName, dealAmount, buildYear, dealYear, dealMonth, dealDay, area, floor, jibun, type
+		from housedeal
+		where code = #{dongcode} and dong = #{dong}
+		order by AptName asc
+	</select>
+	
+	<select id="searchApt" parameterType="map" resultType="HouseDeal">
+		select no, AptName, code, dealAmount, buildYear, dealYear, dealMonth, dealDay, area, floor, jibun, type
+		from housedeal
+		where AptName like #{aptname}
+		order by AptName asc
+	</select>
+	
+	<select id="searchByYear" resultType="map">
+		select buildYear, count(*)
+		from housedeal
+		group by buildYear
+		order by buildYear asc;
+	</select>
+	
+</mapper>
